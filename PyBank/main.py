@@ -1,8 +1,21 @@
 import os
 import csv
-import functools
+# import locale
 
+# # set locale to format currency later
+# locale.setlocale( locale.LC_ALL, '' )
+
+# #function to calculate average
+# def average(numbers):
+#     length = len(numbers)
+#     total = 0.0
+#     for number in numbers:
+#         total += number
+#     return total / length
+
+# import budget data in csv file
 csvpath = os.path.join('python-challenge','PyBank','Resources','budget_data.csv')
+
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
     # print(csvreader)
@@ -10,8 +23,12 @@ with open(csvpath,newline='') as csvfile:
     # pull out header
     header = next(csvreader)
 
-    #create list to count months
+    #create lists to count months and calculate average change and max/min change
     months=[]
+    delta_list = []
+    maxincrease = {"date":"", "amount":0}
+    maxdecrease = {"date":"", "amount":0}
+    
   
     #create variables for Profit/Loss analysis
     pnl = 0
@@ -19,15 +36,15 @@ with open(csvpath,newline='') as csvfile:
     lastpnl = 0
     delta = 0
     deltatotal = 0
-    avgdelta = 0
-    maxincrease = {"date":"", "amount":0}
-    maxdecrease = {"date":"", "amount":0}
+    avgdelta = 0.0
+
 
     for row in csvreader: 
         months.append(row[0])
         pnl = int(row[1])
         nettotal = nettotal + pnl
-        delta = lastpnl + pnl
+        delta = pnl - lastpnl
+        delta_list.append(delta)
         deltatotal = deltatotal + delta
         if delta > 0:
             if delta > int(maxincrease["amount"]):
@@ -39,24 +56,32 @@ with open(csvpath,newline='') as csvfile:
                 maxdecrease["amount"] = delta
         lastpnl = pnl
 
-    monthcount = len(months)
-    avgdelta = float(deltatotal/monthcount) 
+# get final variables before printing output
+monthcount = len(months)
+# avgdelta = average(delta_list)
+avgdelta = sum(delta_list)/len(delta_list)
 
-#Begin printing output
-print("Financial Analysis")
-print("-"*20)
+# # Format variables as money
+# nettotal = locale.currency(nettotal)
+# avgdelta = locale.currency(avgdelta)
 
-# The total number of months included in the dataset
-print(f'Total Months: {monthcount}') 
+with open("Output.txt", "w") as text_file:
 
-# The net total amount of "Profit/Losses" over the entire period
-print(f'Total: {nettotal}') #format as money
+    #Begin printing output
+    print("Financial Analysis")
+    print("-"*20)
 
-# Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
-print(f'Average Change: {avgdelta}') #format as money
+    # The total number of months included in the dataset
+    print(f'Total Months: {monthcount}') 
 
-# The greatest increase in profits (date and amount) over the entire period
-print(f'Greatest Increase in Profits: {maxincrease["date"]} ({maxincrease["amount"]})') #format as money
+    # The net total amount of "Profit/Losses" over the entire period
+    print(f'Total: ${nettotal}') 
 
-# The greatest decrease in losses (date and amount) over the entire period
-print(f'Greatest Decrease in Profits: {maxdecrease["date"]} ({maxdecrease["amount"]})') #format as money
+    # Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
+    print(f'Average Change: ${avgdelta}') 
+
+    # The greatest increase in profits (date and amount) over the entire period
+    print(f'Greatest Increase in Profits: {maxincrease["date"]} (${maxincrease["amount"]})') 
+
+    # The greatest decrease in losses (date and amount) over the entire period
+    print(f'Greatest Decrease in Profits: {maxdecrease["date"]} (${maxdecrease["amount"]})') 

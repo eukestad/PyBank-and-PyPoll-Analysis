@@ -11,27 +11,27 @@ Run in your choice of terminal - VS Code, Git Bash, etc.
 scripts return data into text files
 * PyBank Results
 
- * The total number of months included in the dataset
+    * The total number of months included in the dataset
 
- * The net total amount of "Profit/Losses" over the entire period
+    * The net total amount of "Profit/Losses" over the entire period
 
- * Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
+    * Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
 
- * The greatest increase in profits (date and amount) over the entire period
+    * The greatest increase in profits (date and amount) over the entire period
 
- * The greatest decrease in losses (date and amount) over the entire period
+    * The greatest decrease in losses (date and amount) over the entire period
 
 * PyPoll Results
  
- * The total number of votes cast
+    * The total number of votes cast
 
- * A complete list of candidates who received votes
+    * A complete list of candidates who received votes
 
- * The percentage of votes each candidate won
+    * The percentage of votes each candidate won
 
- * The total number of votes each candidate won
+    * The total number of votes each candidate won
 
- * The winner of the election based on popular vote.
+    * The winner of the election based on popular vote.
 
 ## Screenshots
 

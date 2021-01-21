@@ -14,7 +14,7 @@ import csv
 #     return total / length
 
 # import budget data in csv file
-csvpath = os.path.join('python-challenge','PyBank','Resources','budget_data.csv')
+csvpath = os.path.join('PyBank','Resources','budget_data.csv')
 
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
@@ -56,32 +56,31 @@ with open(csvpath,newline='') as csvfile:
                 maxdecrease["amount"] = delta
         lastpnl = pnl
 
+
+
+
 # get final variables before printing output
 monthcount = len(months)
 # avgdelta = average(delta_list)
 avgdelta = sum(delta_list)/len(delta_list)
 
-# # Format variables as money
+# # Format avgdelta as money
 # nettotal = locale.currency(nettotal)
 # avgdelta = locale.currency(avgdelta)
 
-with open("Output.txt", "w") as text_file:
+outpath = os.path.join('PyBank','Analysis','Output.txt')
 
+with open(outpath, "w") as text_file:
     #Begin printing output
-    print("Financial Analysis")
-    print("-"*20)
-
+    print("Financial Analysis",file=text_file)
+    print("-"*20,file=text_file)
     # The total number of months included in the dataset
-    print(f'Total Months: {monthcount}') 
-
+    print(f'Total Months: {monthcount}',file=text_file) 
     # The net total amount of "Profit/Losses" over the entire period
-    print(f'Total: ${nettotal}') 
-
+    print(f'Total: ${nettotal}',file=text_file) 
     # Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
-    print(f'Average Change: ${avgdelta}') 
-
+    print(f'Average Change: ${avgdelta}',file=text_file) 
     # The greatest increase in profits (date and amount) over the entire period
-    print(f'Greatest Increase in Profits: {maxincrease["date"]} (${maxincrease["amount"]})') 
-
+    print(f'Greatest Increase in Profits: {maxincrease["date"]} (${maxincrease["amount"]})',file=text_file) 
     # The greatest decrease in losses (date and amount) over the entire period
-    print(f'Greatest Decrease in Profits: {maxdecrease["date"]} (${maxdecrease["amount"]})') 
+    print(f'Greatest Decrease in Profits: {maxdecrease["date"]} (${maxdecrease["amount"]})',file=text_file) 

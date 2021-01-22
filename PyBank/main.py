@@ -1,72 +1,48 @@
 import os
 import csv
-# import locale
 
-# # set locale to format currency later
-# locale.setlocale( locale.LC_ALL, '' )
-
-# #function to calculate average
-# def average(numbers):
-#     length = len(numbers)
-#     total = 0.0
-#     for number in numbers:
-#         total += number
-#     return total / length
+#create lists and dictionaries
+budget_data = []
+amounts = []
+delta_list = []
+maxincrease = {"date":"", "amount":0}
+maxdecrease = {"date":"", "amount":0}
 
 # import budget data in csv file
 csvpath = os.path.join('PyBank','Resources','budget_data.csv')
 
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
-    # print(csvreader)
 
     # pull out header
     header = next(csvreader)
 
-    #create lists to count months and calculate average change and max/min change
-    months=[]
-    delta_list = []
-    maxincrease = {"date":"", "amount":0}
-    maxdecrease = {"date":"", "amount":0}
+    # append data into memory list for use later 
+    for row in csvreader:
+        budget_data.append(row)
+
+# get total months
+monthcount = len(budget_data)
+
+# separate amounts from all budget data and calculate net total
+amounts = [int(item[-1]) for item in budget_data]
+nettotal = sum(amounts)
+
+# iterate through budget data and compare changes to get the average change
+for previous, current in zip(budget_data,budget_data[1:]):
     
-  
-    #create variables for Profit/Loss analysis
-    pnl = 0
-    nettotal = 0
-    lastpnl = 0
-    delta = 0
-    deltatotal = 0
-    avgdelta = 0.0
-
-
-    for row in csvreader: 
-        months.append(row[0])
-        pnl = int(row[1])
-        nettotal = nettotal + pnl
-        delta = pnl - lastpnl
-        delta_list.append(delta)
-        deltatotal = deltatotal + delta
-        if delta > 0:
-            if delta > int(maxincrease["amount"]):
-                maxincrease["date"] = row[0]
-                maxincrease["amount"] = delta
-        if delta < 0:
-            if delta < int(maxdecrease["amount"]):
-                maxdecrease["date"] = row[0]
-                maxdecrease["amount"] = delta
-        lastpnl = pnl
-
-
-
-
-# get final variables before printing output
-monthcount = len(months)
-# avgdelta = average(delta_list)
-avgdelta = sum(delta_list)/len(delta_list)
-
-# # Format avgdelta as money
-# nettotal = locale.currency(nettotal)
-# avgdelta = locale.currency(avgdelta)
+    delta = int(current[1]) - int(previous[1])
+    delta_list.append(delta)
+    if delta > 0:
+        if delta > int(maxincrease["amount"]):
+            maxincrease["date"] = row[0]
+            maxincrease["amount"] = delta
+    if delta < 0:
+        if delta < int(maxdecrease["amount"]):
+            maxdecrease["date"] = row[0]
+            maxdecrease["amount"] = delta
+    
+avgdelta = round(sum(delta_list)/len(delta_list),2)
 
 outpath = os.path.join('PyBank','Analysis','Output.txt')
 

@@ -12,14 +12,12 @@ csvpath = os.path.join('PyPoll','Resources','election_data.csv')
 
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
-    # print(csvreader)
 
     # pull out header
     header = next(csvreader)
 
     # append data into memory list for use later and get unique list of candidates
     for row in csvreader:
-        # print(row[2])
         votes.append(row)
         if row[2] not in candidates:
             candidates.append(row[2])

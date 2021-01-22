@@ -8,7 +8,7 @@ percentages = []
 votetotals = []
 
 # import data
-csvpath = os.path.join('PyPoll','Resources','election_data.csv')
+csvpath = os.path.join('Resources','election_data.csv')
 
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
@@ -68,7 +68,7 @@ print(f"Winner: {winner}")
 print("-"*20)
 
 #Print to text file
-outpath = os.path.join('PyPoll','Analysis','Output.txt')
+outpath = os.path.join('Analysis','Output.txt')
 
 with open(outpath, "w") as text_file:
     print("Election Results",file=text_file)

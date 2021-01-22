@@ -9,7 +9,7 @@ maxincrease = {"date":"", "amount":0}
 maxdecrease = {"date":"", "amount":0}
 
 # import budget data in csv file
-csvpath = os.path.join('PyBank','Resources','budget_data.csv')
+csvpath = os.path.join('Resources','budget_data.csv')
 
 with open(csvpath,newline='') as csvfile:
     csvreader = csv.reader(csvfile,delimiter=',')
@@ -59,7 +59,7 @@ print(f'Greatest Increase in Profits: {maxincrease["date"]} (${maxincrease["amou
 print(f'Greatest Decrease in Profits: {maxdecrease["date"]} (${maxdecrease["amount"]})') 
 
 #print to text file
-outpath = os.path.join('PyBank','Analysis','Output.txt')
+outpath = os.path.join('Analysis','Output.txt')
 
 with open(outpath, "w") as text_file:
     print("Financial Analysis",file=text_file)

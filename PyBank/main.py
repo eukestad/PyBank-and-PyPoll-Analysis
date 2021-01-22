@@ -44,10 +44,24 @@ for previous, current in zip(budget_data,budget_data[1:]):
     
 avgdelta = round(sum(delta_list)/len(delta_list),2)
 
+#print to terminal
+print("Financial Analysis")
+print("-"*20)
+# The total number of months included in the dataset
+print(f'Total Months: {monthcount}') 
+# The net total amount of "Profit/Losses" over the entire period
+print(f'Total: ${nettotal}') 
+# Calculate the changes in "Profit/Losses" over the entire period, then find the average of those changes
+print(f'Average Change: ${avgdelta}') 
+# The greatest increase in profits (date and amount) over the entire period
+print(f'Greatest Increase in Profits: {maxincrease["date"]} (${maxincrease["amount"]})') 
+# The greatest decrease in losses (date and amount) over the entire period
+print(f'Greatest Decrease in Profits: {maxdecrease["date"]} (${maxdecrease["amount"]})') 
+
+#print to text file
 outpath = os.path.join('PyBank','Analysis','Output.txt')
 
 with open(outpath, "w") as text_file:
-    #Begin printing output
     print("Financial Analysis",file=text_file)
     print("-"*20,file=text_file)
     # The total number of months included in the dataset

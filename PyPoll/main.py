@@ -55,10 +55,22 @@ def getwinner(resultlist):
 
 winner = getwinner(allresults)
 
+#Print to terminal
+print("Election Results")
+print("-"*20)
+print(f"Total Votes: {total}")
+print("-"*20)
+for result in allresults:
+    printline = str(f'{result[0]}: {result[1]}00% ({result[2]})')
+    print(printline)
+print("-"*20)
+print(f"Winner: {winner}")
+print("-"*20)
+
+#Print to text file
 outpath = os.path.join('PyPoll','Analysis','Output.txt')
 
 with open(outpath, "w") as text_file:
-    #Begin printing output
     print("Election Results",file=text_file)
     print("-"*20,file=text_file)
     print(f"Total Votes: {total}",file=text_file)
